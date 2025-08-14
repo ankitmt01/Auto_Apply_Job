@@ -1,0 +1,13 @@
+{
+  "summary": "DevOps/Platform engineer driving reliable, secure, and cost-efficient cloud infrastructure. Built scalable CI/CD, Kubernetes platforms, and observability stacks that shorten lead time, reduce MTTR, and improve developer velocity.",
+  "core_skills": ["AWS","Kubernetes","Terraform","Docker","CI/CD","Linux","Networking","Monitoring/Alerting","SRE","Security/IAM"],
+  "bullets": [
+    {"text": "Designed and operated multi-account AWS foundation (VPC, Transit Gateway, IAM, KMS), enabling secure, compliant environments across {N} teams.", "tags": ["aws","iam","security","network"]},
+    {"text": "Built GitOps-based Kubernetes platform (EKS + ArgoCD/Helm) to deploy {N} services; cut lead time to production by {X}%.", "tags": ["kubernetes","eks","argocd","helm","ci","cd"]},
+    {"text": "Codified infra with Terraform modules; delivered repeatable, reviewable changes and reduced drift incidents by {X}%.", "tags": ["terraform","iac"]},
+    {"text": "Implemented end-to-end CI/CD (GitHub Actions/Jenkins) with automated testing, image signing, and progressive rollout policies.", "tags": ["ci","cd","github actions","jenkins","security"]},
+    {"text": "Centralized observability (Prometheus, Grafana, Loki, OTEL) with SLOs and alert routing; reduced MTTR by {X}%.", "tags": ["prometheus","grafana","loki","otel","sre"]},
+    {"text": "Hardened container supply chain (Trivy, ECR policies) and secrets management (Vault); passed {N} external audits.", "tags": ["security","docker","vault"]},
+    {"text": "Optimized infra costs (Spot, Savings Plans, rightsizing) saving ${X}/yr without impacting reliability.", "tags": ["aws","cost","finops"]}
+  ]
+}

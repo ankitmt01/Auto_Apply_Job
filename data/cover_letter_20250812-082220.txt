@@ -1,0 +1,12 @@
+Dear Hiring Team,
+
+I'm excited to apply for the 3D Illustrator/Animator, Brand Advertising role at stripe. My background combines hands-on delivery and systems thinking, and I’ve shipped ML features end-to-end in production.
+
+Highlights aligned with the role requirements:
+- Built NLP classifier (F1 0.92) on 5M docs using DistilBERT
+- Cut inference cost by 32% via batching & INT8 quantization
+
+I value clear metrics, reliable pipelines, and partnering closely with product and infra. I’d love to contribute that same impact to your team. Links and résumé attached.
+
+Best regards,
+Your Name
