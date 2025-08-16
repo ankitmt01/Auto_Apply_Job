@@ -1,0 +1,9 @@
+{
+  "summary": "Backend engineer shipping reliable, observable services at scale. Bias for simple designs, crisp APIs, and fast feedback loops.",
+  "core_skills": ["Python","Go","Postgres","Redis","gRPC/REST","Kubernetes","Docker","CI/CD","Kafka","AWS"],
+  "bullets": [
+    {"text":"Designed and shipped {N} microservices with SLOs; reduced p95 latency by {X}%.","tags":["microservices","slo"]},
+    {"text":"Built event-driven features with Kafka and idempotent consumers; eliminated duplicate processing.","tags":["kafka"]},
+    {"text":"Hardened data layer (Postgres) with migrations and read replicas; improved availability.","tags":["postgres","migrations"]}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "summary": "Data/ML engineer building robust data platforms and applied ML that move business metrics. Pragmatic about data quality, orchestration, and reliable deployment.",
+  "core_skills": ["Python","SQL","Spark","Airflow","dbt","Snowflake","BigQuery","ML Ops","Pandas","Feature Stores"],
+  "bullets": [
+    {"text":"Built lakehouse pipelines (dbt/Spark) with SLAs; improved data freshness from hours to minutes.","tags":["spark","dbt","airflow","sla"]},
+    {"text":"Trained and deployed ML models (forecasting/NLP) with CI/CD; lifted KPI by {X}%.","tags":["ml","nlp","cicd"]},
+    {"text":"Optimized warehouse costs and partitioning to cut compute spend by {X}%.","tags":["snowflake","bigquery","cost"]}
+  ]
+}

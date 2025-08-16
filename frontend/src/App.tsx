@@ -3,7 +3,7 @@ import ApplicationsPanel from "./components/ui/ApplicationsUI";
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Sparkles, ExternalLink, Settings as Cog, RefreshCw, Wand2, Upload, PlayCircle, Trash2 } from 'lucide-react';
+import { Briefcase, Sparkles, ExternalLink, Settings as Cog, RefreshCw, Wand2, Upload, PlayCircle } from 'lucide-react';
 import { Card, CardContent } from './components/ui/card';
 import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
@@ -17,7 +17,7 @@ const API = (path: string) => `http://localhost:8000${path}`;
 type Job = { id: string; title: string; company: string; location: string; source: string; url: string; jd_text: string; score: number; created_at: string };
 
 export default function App() {
-  // 🔁 add 'applications' to tabs
+  // tabs include Applications now
   const [tab, setTab] = useState<'jobs'|'drafts'|'applications'>('jobs');
 
   const [rolesText, setRolesText] = useState('Data Scientist, ML Engineer');
@@ -34,7 +34,7 @@ export default function App() {
 
   const [drafts, setDrafts] = useState<any[]>([]);
 
-  // ✅ Poll applications; use list for count, byUrl for per-card status, runningCount for badge
+  // Applications live poll
   const { list: applications, byUrl, runningCount } = useApplicationsPoll(4000);
 
   const splitList = (s: string) => s.split(',').map(x => x.trim()).filter(Boolean);
@@ -47,7 +47,7 @@ export default function App() {
       const res = await fetch(API('/search/jobs'), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error('API error ' + res.status);
       setJobs(await res.json());
-    } catch (e: any) { setError(e.message || 'Failed to load jobs'); } 
+    } catch (e: any) { setError(e.message || 'Failed to load jobs'); }
     finally { setLoading(false); }
   }
 
@@ -59,7 +59,7 @@ export default function App() {
       const data = await res.json();
       setTailorResult(data);
       setOpenTailor(true);
-    } catch (e: any) { setError(e.message || 'Failed to tailor'); } 
+    } catch (e: any) { setError(e.message || 'Failed to tailor'); }
     finally { setLoading(false); }
   }
 
@@ -70,7 +70,7 @@ export default function App() {
       if (!res.ok) throw new Error('Draft error ' + res.status);
       await fetchDrafts();
       setTab('drafts');
-    } catch (e:any){ setError(e.message || 'Failed to create draft'); } 
+    } catch (e:any){ setError(e.message || 'Failed to create draft'); }
     finally { setLoading(false); }
   }
 
@@ -103,7 +103,6 @@ export default function App() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {/* shows live running tasks */}
             <ApplicationsNavBadge running={runningCount} />
             <Button variant="outline" size="sm" className="gap-2" onClick={fetchJobs}>
               <RefreshCw className="h-4 w-4" />{loading ? 'Syncing…' : 'Sync'}
@@ -115,7 +114,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* tabs row */}
         <div className="mx-auto max-w-7xl px-4 py-2 flex gap-2 text-sm">
           <button className={`px-3 py-1 rounded-lg ${tab==='jobs'?'bg-black text-white':'hover:bg-zinc-100'}`} onClick={()=>setTab('jobs')}>Jobs</button>
           <button className={`px-3 py-1 rounded-lg ${tab==='drafts'?'bg-black text-white':'hover:bg-zinc-100'}`} onClick={()=>{ setTab('drafts'); fetchDrafts(); }}>Drafts / Stuck</button>
@@ -197,13 +195,31 @@ export default function App() {
         {tab==='drafts' && (
           <div className="space-y-3">
             <div className="text-sm text-zinc-500">Drafts & stuck applications ({drafts.length})</div>
-            {/* your existing drafts grid here (unchanged) */}
+            {/* Your existing drafts grid (resume/delete buttons & links) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {drafts.map((d:any) => (
+                <Card key={d.id} className="rounded-2xl">
+                  <CardContent className="p-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="font-medium">{d.company || 'Unknown company'}</div>
+                      <Badge variant="secondary">{d.portal || 'Portal'}</Badge>
+                    </div>
+                    <div className="text-xs text-zinc-500">Step: {d.step || '—'} • {d.status}</div>
+                    <div className="flex items-center gap-2">
+                      <Button size="sm" className="gap-2" onClick={()=>resumeDraft(d.id)}><PlayCircle className="h-4 w-4" /> Resume</Button>
+                      <Button size="sm" variant="outline" className="gap-2" onClick={()=>deleteDraft(d.id)}>Delete</Button>
+                      {d.screenshot_url && <a className="text-sm text-blue-600" href={`http://localhost:8000${d.screenshot_url}`} target="_blank" rel="noreferrer">Screenshot</a>}
+                      {d.snapshot_url && <a className="text-sm text-blue-600" href={`http://localhost:8000${d.snapshot_url}`} target="_blank" rel="noreferrer">DOM</a>}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
         {tab==='applications' && (
           <div className="space-y-3">
-            {/* Full applications table with live status */}
             <ApplicationsPanel />
           </div>
         )}
@@ -221,28 +237,28 @@ export default function App() {
             ✕
           </button>
 
-        <DialogHeader>
-          <DialogTitle>Tailored materials — {selectedJob?.company}</DialogTitle>
-        </DialogHeader>
+          <DialogHeader>
+            <DialogTitle>Tailored materials — {selectedJob?.company}</DialogTitle>
+          </DialogHeader>
 
-        {!tailorResult ? <div>Loading…</div> : (
-          <div className="space-y-3">
-            <div>
-              <div className="text-xs text-zinc-500">Revised bullets</div>
-              <div className="rounded-xl border p-3 text-sm space-y-1">
-                {tailorResult.revised_bullets?.map((b: string, i: number) => (<div key={i}>• {b}</div>))}
+          {!tailorResult ? <div>Loading…</div> : (
+            <div className="space-y-3">
+              <div>
+                <div className="text-xs text-zinc-500">Revised bullets</div>
+                <div className="rounded-xl border p-3 text-sm space-y-1">
+                  {tailorResult.revised_bullets?.map((b: string, i: number) => (<div key={i}>• {b}</div>))}
+                </div>
+              </div>
+              <div>
+                <div className="text-xs text-zinc-500">Cover letter</div>
+                <Textarea rows={8} defaultValue={tailorResult.cover_letter} />
+              </div>
+              <div className="flex gap-2">
+                {tailorResult.resume_docx_url && <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm" href={tailorResult.resume_docx_url} target="_blank" rel="noreferrer">Download Résumé</a>}
+                {tailorResult.cover_letter_url && <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm" href={tailorResult.cover_letter_url} target="_blank" rel="noreferrer">Download Cover Letter</a>}
               </div>
             </div>
-            <div>
-              <div className="text-xs text-zinc-500">Cover letter</div>
-              <Textarea rows={8} defaultValue={tailorResult.cover_letter} />
-            </div>
-            <div className="flex gap-2">
-              {tailorResult.resume_docx_url && <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm" href={tailorResult.resume_docx_url} target="_blank" rel="noreferrer">Download Résumé</a>}
-              {tailorResult.cover_letter_url && <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm" href={tailorResult.cover_letter_url} target="_blank" rel="noreferrer">Download Cover Letter</a>}
-            </div>
-          </div>
-        )}
+          )}
         </DialogContent>
       </Dialog>
     </div>
