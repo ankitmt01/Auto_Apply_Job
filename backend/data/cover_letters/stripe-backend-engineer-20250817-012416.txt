@@ -1,0 +1,14 @@
+Dear Hiring Team at stripe,
+
+I’m excited to apply for the Backend Engineer position. My background aligns closely with your needs, particularly around the areas highlighted in the job description.
+
+A few relevant highlights:
+• Designed and shipped 5 microservices with SLOs; reduced p95 latency by 30%.
+• Built event-driven features with Kafka and idempotent consumers; eliminated duplicate processing.
+• Hardened data layer (Postgres) with migrations and read replicas; improved availability.
+
+I value pragmatic automation, clear SLOs, and collaborative delivery with security as a first principle. I’d welcome the chance to talk through how I can help your team achieve its goals.
+
+Best regards,
+Ankit Gupta
+ankit@ankit.com | +91-9027858685

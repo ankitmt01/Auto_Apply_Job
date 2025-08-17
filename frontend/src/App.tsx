@@ -237,8 +237,17 @@ export default function App() {
             ✕
           </button>
 
+          {/* UPDATED: ATS score badge in header */}
           <DialogHeader>
-            <DialogTitle>Tailored materials — {selectedJob?.company}</DialogTitle>
+            <div className="flex items-center justify-between">
+              <DialogTitle>Tailored materials — {selectedJob?.company}</DialogTitle>
+              {typeof tailorResult?.ats_score === 'number' && (
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-1 text-sm">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  ATS fit {tailorResult.ats_score}%
+                </div>
+              )}
+            </div>
           </DialogHeader>
 
           {!tailorResult ? <div>Loading…</div> : (
@@ -249,13 +258,26 @@ export default function App() {
                   {tailorResult.revised_bullets?.map((b: string, i: number) => (<div key={i}>• {b}</div>))}
                 </div>
               </div>
-              <div>
-                <div className="text-xs text-zinc-500">Cover letter</div>
-                <Textarea rows={8} defaultValue={tailorResult.cover_letter} />
-              </div>
+              {/* Only show textarea if backend provided inline text */}
+              {tailorResult.cover_letter && (
+                <div>
+                  <div className="text-xs text-zinc-500">Cover letter</div>
+                  <Textarea rows={8} defaultValue={tailorResult.cover_letter} />
+                </div>
+              )}
               <div className="flex gap-2">
-                {tailorResult.resume_docx_url && <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm" href={tailorResult.resume_docx_url} target="_blank" rel="noreferrer">Download Résumé</a>}
-                {tailorResult.cover_letter_url && <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm" href={tailorResult.cover_letter_url} target="_blank" rel="noreferrer">Download Cover Letter</a>}
+                {tailorResult.resume_docx_url && (
+                  <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm"
+                     href={tailorResult.resume_docx_url} target="_blank" rel="noreferrer">
+                    Download Résumé
+                  </a>
+                )}
+                {tailorResult.cover_letter_url && (
+                  <a className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm"
+                     href={tailorResult.cover_letter_url} target="_blank" rel="noreferrer">
+                    Download Cover Letter
+                  </a>
+                )}
               </div>
             </div>
           )}

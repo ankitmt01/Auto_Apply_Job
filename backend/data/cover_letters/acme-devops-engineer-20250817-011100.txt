@@ -1,0 +1,14 @@
+Dear Hiring Team at Acme,
+
+I’m excited to apply for the DevOps Engineer position. My background aligns closely with your needs, particularly around the areas highlighted in the job description.
+
+A few relevant highlights:
+• Designed and operated multi-account AWS foundation (VPC, Transit Gateway, IAM, KMS), enabling secure, compliant environments across 5 teams.
+• Built GitOps-based Kubernetes platform (EKS + ArgoCD/Helm) to deploy 5 services; cut lead time to production by 30%.
+• Codified infra with Terraform modules; delivered repeatable, reviewable changes and reduced drift incidents by 30%.
+
+I value pragmatic automation, clear SLOs, and collaborative delivery with security as a first principle. I’d welcome the chance to talk through how I can help your team achieve its goals.
+
+Best regards,
+Ankit Gupta
+ankit@ankit.com | +91-9027858685
